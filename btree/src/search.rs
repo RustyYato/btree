@@ -41,6 +41,9 @@ pub(super) enum IndexResult {
     Edge(usize),
 }
 
+trait Searcher<BorrowType, K, V> = FnMut(&K) -> Ordering;
+// FnMut(Handle<NodeRef<BorrowType, K, V, marker::LeafOrInternal>, marker::KV>) -> Ordering;
+
 impl<BorrowType: marker::BorrowType, K, V> NodeRef<BorrowType, K, V, marker::LeafOrInternal> {
     /// Looks up a given key in a (sub)tree headed by the node, recursively.
     /// Returns a `Found` with the handle of the matching KV, if any. Otherwise,
@@ -184,6 +187,27 @@ impl<BorrowType: marker::BorrowType, K, V> NodeRef<BorrowType, K, V, marker::Lea
         let edge = unsafe { Handle::new_edge(self, edge_idx) };
         (edge, bound)
     }
+
+    /// Looks up a given key in a (sub)tree headed by the node, recursively.
+    /// Returns a `Found` with the handle of the matching KV, if any. Otherwise,
+    /// returns a `GoDown` with the handle of the leaf edge where the key belongs.
+    ///
+    /// The result is meaningful only if the tree is ordered by key, like the tree
+    /// in a `BTreeMap` is.
+    pub(super) fn search_tree_with(
+        mut self,
+        mut cmp: impl Searcher<BorrowType, K, V>,
+    ) -> SearchResult<BorrowType, K, V, marker::LeafOrInternal, marker::Leaf> {
+        loop {
+            self = match self.search_node_with(&mut cmp) {
+                Found(handle) => return Found(handle),
+                GoDown(handle) => match handle.force() {
+                    Leaf(leaf) => return GoDown(leaf),
+                    Internal(internal) => internal.descend(),
+                },
+            }
+        }
+    }
 }
 
 impl<BorrowType, K, V, Type> NodeRef<BorrowType, K, V, Type> {
@@ -203,6 +227,23 @@ impl<BorrowType, K, V, Type> NodeRef<BorrowType, K, V, Type> {
         K: Borrow<Q>,
     {
         match unsafe { self.find_key_index(key, 0) } {
+            IndexResult::KV(idx) => Found(unsafe { Handle::new_kv(self, idx) }),
+            IndexResult::Edge(idx) => GoDown(unsafe { Handle::new_edge(self, idx) }),
+        }
+    }
+
+    /// Looks up a given key in the node, without recursion.
+    /// Returns a `Found` with the handle of the matching KV, if any. Otherwise,
+    /// returns a `GoDown` with the handle of the edge where the key might be found
+    /// (if the node is internal) or where the key can be inserted.
+    ///
+    /// The result is meaningful only if the tree is ordered by key, like the tree
+    /// in a `BTreeMap` is.
+    pub(super) fn search_node_with(
+        self,
+        cmp: &mut impl Searcher<BorrowType, K, V>,
+    ) -> SearchResult<BorrowType, K, V, Type, Type> {
+        match unsafe { self.find_key_index_with(cmp, 0) } {
             IndexResult::KV(idx) => Found(unsafe { Handle::new_kv(self, idx) }),
             IndexResult::Edge(idx) => GoDown(unsafe { Handle::new_edge(self, idx) }),
         }
@@ -229,6 +270,35 @@ impl<BorrowType, K, V, Type> NodeRef<BorrowType, K, V, Type> {
             .enumerate()
         {
             match key.cmp(k.borrow()) {
+                Ordering::Greater => {}
+                Ordering::Equal => return IndexResult::KV(start_index + offset),
+                Ordering::Less => return IndexResult::Edge(start_index + offset),
+            }
+        }
+        IndexResult::Edge(keys.len())
+    }
+
+    /// Returns either the KV index in the node at which the key (or an equivalent)
+    /// exists, or the edge index where the key belongs, starting from a particular index.
+    ///
+    /// The result is meaningful only if the tree is ordered by key, like the tree
+    /// in a `BTreeMap` is.
+    ///
+    /// # Safety
+    /// `start_index` must be a valid edge index for the node.
+    unsafe fn find_key_index_with(
+        &self,
+        cmp: &mut impl Searcher<BorrowType, K, V>,
+        start_index: usize,
+    ) -> IndexResult {
+        let node = self.reborrow();
+        let keys = node.keys();
+        debug_assert!(start_index <= keys.len());
+        for (offset, k) in unsafe { keys.get_unchecked(start_index..) }
+            .iter()
+            .enumerate()
+        {
+            match cmp(k) {
                 Ordering::Greater => {}
                 Ordering::Equal => return IndexResult::KV(start_index + offset),
                 Ordering::Less => return IndexResult::Edge(start_index + offset),

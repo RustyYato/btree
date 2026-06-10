@@ -7,7 +7,8 @@
     dropck_eyepatch,
     core_intrinsics,
     slice_ptr_get,
-    min_specialization
+    min_specialization,
+    trait_alias
 )]
 
 extern crate alloc;
@@ -31,3 +32,7 @@ mod set_val;
 mod split;
 
 mod testing;
+
+mod btree;
+
+pub use btree::*;
