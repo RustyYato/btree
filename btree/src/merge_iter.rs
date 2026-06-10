@@ -1,4 +1,4 @@
-//! Taken from std, https://github.com/rust-lang/rust/tree/beae781308e9ddef13074a03faf57ca2fac59a5b/library/alloc/src/collections/btree/merge_iter.rs
+//! Taken from std, <https://github.com/rust-lang/rust/tree/beae781308e9ddef13074a03faf57ca2fac59a5b/library/alloc/src/collections/btree/merge_iter.rs>
 
 use core::cmp::Ordering;
 use core::fmt::{self, Debug};

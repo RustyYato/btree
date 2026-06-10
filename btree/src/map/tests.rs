@@ -1,4 +1,4 @@
-//! Taken from std, https://github.com/rust-lang/rust/tree/beae781308e9ddef13074a03faf57ca2fac59a5b/library/alloc/src/collections/btree/map/tests.rs
+//! Taken from std, <https://github.com/rust-lang/rust/tree/beae781308e9ddef13074a03faf57ca2fac59a5b/library/alloc/src/collections/btree/map/tests.rs>
 
 #![allow(clippy::redundant_closure, clippy::single_char_add_str)]
 

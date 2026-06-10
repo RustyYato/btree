@@ -1,4 +1,4 @@
-//! Taken from std, https://github.com/rust-lang/rust/tree/beae781308e9ddef13074a03faf57ca2fac59a5b/library/alloc/src/collections/btree/navigate.rs
+//! Taken from std, <https://github.com/rust-lang/rust/tree/beae781308e9ddef13074a03faf57ca2fac59a5b/library/alloc/src/collections/btree/navigate.rs>
 
 use core::borrow::Borrow;
 use core::ops::RangeBounds;

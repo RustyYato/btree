@@ -1,4 +1,4 @@
-//! Taken from std, https://github.com/rust-lang/rust/tree/485ec3fbcc12fa14ef6596dabb125ad710499c9e/library/alloctests/testing/rng.rs
+//! Taken from std, <https://github.com/rust-lang/rust/tree/485ec3fbcc12fa14ef6596dabb125ad710499c9e/library/alloctests/testing/rng.rs>
 
 /// XorShiftRng
 pub(crate) struct DeterministicRng {

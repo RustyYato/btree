@@ -1,4 +1,4 @@
-//! Taken from std, https://github.com/rust-lang/rust/tree/beae781308e9ddef13074a03faf57ca2fac59a5b/library/alloc/src/collections/btree/map/entry.rs
+//! Taken from std, <https://github.com/rust-lang/rust/tree/beae781308e9ddef13074a03faf57ca2fac59a5b/library/alloc/src/collections/btree/map/entry.rs>
 
 use core::fmt::{self, Debug};
 use core::marker::PhantomData;

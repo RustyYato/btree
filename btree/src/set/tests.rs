@@ -1,4 +1,4 @@
-//! Taken from std, https://github.com/rust-lang/rust/tree/beae781308e9ddef13074a03faf57ca2fac59a5b/library/alloc/src/collections/btree/src/set/tests.rs
+//! Taken from std, <https://github.com/rust-lang/rust/tree/beae781308e9ddef13074a03faf57ca2fac59a5b/library/alloc/src/collections/btree/src/set/tests.rs>
 
 use core::ops::Bound::{Excluded, Included};
 use std::panic::{AssertUnwindSafe, catch_unwind};

@@ -1,4 +1,4 @@
-//! Taken from std, https://github.com/rust-lang/rust/tree/485ec3fbcc12fa14ef6596dabb125ad710499c9e/library/alloctests/testing/crash_test.rs
+//! Taken from std, <https://github.com/rust-lang/rust/tree/485ec3fbcc12fa14ef6596dabb125ad710499c9e/library/alloctests/testing/crash_test.rs>
 
 use core::cmp::Ordering;
 use core::fmt::Debug;

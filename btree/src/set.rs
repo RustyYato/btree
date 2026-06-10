@@ -1,4 +1,4 @@
-//! Taken from std, https://github.com/rust-lang/rust/tree/beae781308e9ddef13074a03faf57ca2fac59a5b/library/alloc/src/collections/btree/set.rs
+//! Taken from std, <https://github.com/rust-lang/rust/tree/beae781308e9ddef13074a03faf57ca2fac59a5b/library/alloc/src/collections/btree/set.rs>
 
 use core::borrow::Borrow;
 use core::cmp::Ordering::{self, Equal, Greater, Less};
@@ -12,8 +12,8 @@ use core::ops::{BitAnd, BitOr, BitXor, Bound, RangeBounds, Sub};
 use super::map::{self, BTreeMap, Keys};
 use super::merge_iter::MergeIterInner;
 use super::set_val::SetValZST;
-use alloc::vec::Vec;
 use alloc::alloc::{Allocator, Global};
+use alloc::vec::Vec;
 
 mod entry;
 pub use self::entry::{Entry, OccupiedEntry, VacantEntry};

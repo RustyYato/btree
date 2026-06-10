@@ -1,4 +1,4 @@
-//! Taken from std, https://github.com/rust-lang/rust/tree/485ec3fbcc12fa14ef6596dabb125ad710499c9e/library/alloctests/testing/macros.rs
+//! Taken from std, <https://github.com/rust-lang/rust/tree/485ec3fbcc12fa14ef6596dabb125ad710499c9e/library/alloctests/testing/macros.rs>
 
 macro_rules! struct_with_counted_drop {
     ($struct_name:ident $(( $( $elt_ty:ty ),+ ))?, $drop_counter:ident $( => $drop_stmt:expr )? ) => {
