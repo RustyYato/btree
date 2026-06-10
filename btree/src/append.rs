@@ -1,6 +1,6 @@
 //! Taken from std, https://github.com/rust-lang/rust/tree/beae781308e9ddef13074a03faf57ca2fac59a5b/library/alloc/src/collections/btree/src/append.rs
 
-use core::alloc::Allocator;
+use alloc::alloc::Allocator;
 
 use super::node::{self, Root};
 

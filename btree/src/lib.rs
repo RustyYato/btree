@@ -1,3 +1,4 @@
+#![no_std]
 #![feature(
     allocator_api,
     trusted_len,
@@ -10,6 +11,9 @@
 )]
 
 extern crate alloc;
+#[cfg(test)]
+#[macro_use]
+extern crate std;
 
 mod append;
 mod borrow;

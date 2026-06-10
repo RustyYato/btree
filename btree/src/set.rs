@@ -12,8 +12,8 @@ use core::ops::{BitAnd, BitOr, BitXor, Bound, RangeBounds, Sub};
 use super::map::{self, BTreeMap, Keys};
 use super::merge_iter::MergeIterInner;
 use super::set_val::SetValZST;
-use std::alloc::{Allocator, Global};
-use std::vec::Vec;
+use alloc::vec::Vec;
+use alloc::alloc::{Allocator, Global};
 
 mod entry;
 pub use self::entry::{Entry, OccupiedEntry, VacantEntry};
@@ -39,7 +39,7 @@ pub use self::entry::{Entry, OccupiedEntry, VacantEntry};
 /// # Examples
 ///
 /// ```
-/// use std::collections::BTreeSet;
+/// use core::collections::BTreeSet;
 ///
 /// // Type inference lets us omit an explicit type signature (which
 /// // would be `BTreeSet<&str>` in this example).
@@ -69,7 +69,7 @@ pub use self::entry::{Entry, OccupiedEntry, VacantEntry};
 /// A `BTreeSet` with a known list of items can be initialized from an array:
 ///
 /// ```
-/// use std::collections::BTreeSet;
+/// use core::collections::BTreeSet;
 ///
 /// let set = BTreeSet::from([1, 2, 3]);
 /// ```
@@ -308,7 +308,7 @@ impl<T> BTreeSet<T> {
     ///
     /// ```
     /// # #![allow(unused_mut)]
-    /// use std::collections::BTreeSet;
+    /// use core::collections::BTreeSet;
     ///
     /// let mut set: BTreeSet<i32> = BTreeSet::new();
     /// ```
@@ -330,8 +330,8 @@ impl<T, A: Allocator + Clone> BTreeSet<T, A> {
     /// # #![feature(allocator_api)]
     /// # #![feature(btreemap_alloc)]
     ///
-    /// use std::collections::BTreeSet;
-    /// use std::alloc::Global;
+    /// use core::collections::BTreeSet;
+    /// use alloc::alloc::Global;
     ///
     /// let set: BTreeSet<i32> = BTreeSet::new_in(Global);
     /// ```
@@ -357,8 +357,8 @@ impl<T, A: Allocator + Clone> BTreeSet<T, A> {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeSet;
-    /// use std::ops::Bound::Included;
+    /// use core::collections::BTreeSet;
+    /// use core::ops::Bound::Included;
     ///
     /// let mut set = BTreeSet::new();
     /// set.insert(3);
@@ -387,7 +387,7 @@ impl<T, A: Allocator + Clone> BTreeSet<T, A> {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeSet;
+    /// use core::collections::BTreeSet;
     ///
     /// let mut a = BTreeSet::new();
     /// a.insert(1);
@@ -448,7 +448,7 @@ impl<T, A: Allocator + Clone> BTreeSet<T, A> {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeSet;
+    /// use core::collections::BTreeSet;
     ///
     /// let mut a = BTreeSet::new();
     /// a.insert(1);
@@ -478,7 +478,7 @@ impl<T, A: Allocator + Clone> BTreeSet<T, A> {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeSet;
+    /// use core::collections::BTreeSet;
     ///
     /// let mut a = BTreeSet::new();
     /// a.insert(1);
@@ -537,7 +537,7 @@ impl<T, A: Allocator + Clone> BTreeSet<T, A> {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeSet;
+    /// use core::collections::BTreeSet;
     ///
     /// let mut a = BTreeSet::new();
     /// a.insert(1);
@@ -560,7 +560,7 @@ impl<T, A: Allocator + Clone> BTreeSet<T, A> {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeSet;
+    /// use core::collections::BTreeSet;
     ///
     /// let mut v = BTreeSet::new();
     /// v.insert(1);
@@ -583,7 +583,7 @@ impl<T, A: Allocator + Clone> BTreeSet<T, A> {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeSet;
+    /// use core::collections::BTreeSet;
     ///
     /// let set = BTreeSet::from([1, 2, 3]);
     /// assert_eq!(set.contains(&1), true);
@@ -607,7 +607,7 @@ impl<T, A: Allocator + Clone> BTreeSet<T, A> {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeSet;
+    /// use core::collections::BTreeSet;
     ///
     /// let set = BTreeSet::from([1, 2, 3]);
     /// assert_eq!(set.get(&2), Some(&2));
@@ -627,7 +627,7 @@ impl<T, A: Allocator + Clone> BTreeSet<T, A> {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeSet;
+    /// use core::collections::BTreeSet;
     ///
     /// let a = BTreeSet::from([1, 2, 3]);
     /// let mut b = BTreeSet::new();
@@ -652,7 +652,7 @@ impl<T, A: Allocator + Clone> BTreeSet<T, A> {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeSet;
+    /// use core::collections::BTreeSet;
     ///
     /// let sup = BTreeSet::from([1, 2, 3]);
     /// let mut set = BTreeSet::new();
@@ -729,7 +729,7 @@ impl<T, A: Allocator + Clone> BTreeSet<T, A> {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeSet;
+    /// use core::collections::BTreeSet;
     ///
     /// let sub = BTreeSet::from([1, 2]);
     /// let mut set = BTreeSet::new();
@@ -759,7 +759,7 @@ impl<T, A: Allocator + Clone> BTreeSet<T, A> {
     /// Basic usage:
     ///
     /// ```
-    /// use std::collections::BTreeSet;
+    /// use core::collections::BTreeSet;
     ///
     /// let mut set = BTreeSet::new();
     /// assert_eq!(set.first(), None);
@@ -784,7 +784,7 @@ impl<T, A: Allocator + Clone> BTreeSet<T, A> {
     /// Basic usage:
     ///
     /// ```
-    /// use std::collections::BTreeSet;
+    /// use core::collections::BTreeSet;
     ///
     /// let mut set = BTreeSet::new();
     /// assert_eq!(set.last(), None);
@@ -807,7 +807,7 @@ impl<T, A: Allocator + Clone> BTreeSet<T, A> {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeSet;
+    /// use core::collections::BTreeSet;
     ///
     /// let mut set = BTreeSet::new();
     ///
@@ -830,7 +830,7 @@ impl<T, A: Allocator + Clone> BTreeSet<T, A> {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeSet;
+    /// use core::collections::BTreeSet;
     ///
     /// let mut set = BTreeSet::new();
     ///
@@ -863,7 +863,7 @@ impl<T, A: Allocator + Clone> BTreeSet<T, A> {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeSet;
+    /// use core::collections::BTreeSet;
     ///
     /// let mut set = BTreeSet::new();
     ///
@@ -884,7 +884,7 @@ impl<T, A: Allocator + Clone> BTreeSet<T, A> {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeSet;
+    /// use core::collections::BTreeSet;
     ///
     /// let mut set = BTreeSet::new();
     /// set.insert(Vec::<i32>::new());
@@ -908,7 +908,7 @@ impl<T, A: Allocator + Clone> BTreeSet<T, A> {
     /// ```
     /// #![feature(btree_set_entry)]
     ///
-    /// use std::collections::BTreeSet;
+    /// use core::collections::BTreeSet;
     ///
     /// let mut set = BTreeSet::from([1, 2, 3]);
     /// assert_eq!(set.len(), 3);
@@ -932,7 +932,7 @@ impl<T, A: Allocator + Clone> BTreeSet<T, A> {
     /// ```
     /// #![feature(btree_set_entry)]
     ///
-    /// use std::collections::BTreeSet;
+    /// use core::collections::BTreeSet;
     ///
     /// let mut set: BTreeSet<String> = ["cat", "dog", "horse"]
     ///     .iter().map(|&pet| pet.to_owned()).collect();
@@ -961,8 +961,8 @@ impl<T, A: Allocator + Clone> BTreeSet<T, A> {
     /// ```
     /// #![feature(btree_set_entry)]
     ///
-    /// use std::collections::BTreeSet;
-    /// use std::collections::btree_set::Entry::*;
+    /// use core::collections::BTreeSet;
+    /// use core::collections::btree_set::Entry::*;
     ///
     /// let mut singles = BTreeSet::new();
     /// let mut dupes = BTreeSet::new();
@@ -1010,7 +1010,7 @@ impl<T, A: Allocator + Clone> BTreeSet<T, A> {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeSet;
+    /// use core::collections::BTreeSet;
     ///
     /// let mut set = BTreeSet::new();
     ///
@@ -1036,7 +1036,7 @@ impl<T, A: Allocator + Clone> BTreeSet<T, A> {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeSet;
+    /// use core::collections::BTreeSet;
     ///
     /// let mut set = BTreeSet::from([1, 2, 3]);
     /// assert_eq!(set.take(&2), Some(2));
@@ -1058,7 +1058,7 @@ impl<T, A: Allocator + Clone> BTreeSet<T, A> {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeSet;
+    /// use core::collections::BTreeSet;
     ///
     /// let mut set = BTreeSet::from([1, 2, 3, 4, 5, 6]);
     /// // Keep only the even numbers.
@@ -1078,7 +1078,7 @@ impl<T, A: Allocator + Clone> BTreeSet<T, A> {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeSet;
+    /// use core::collections::BTreeSet;
     ///
     /// let mut a = BTreeSet::new();
     /// a.insert(1);
@@ -1117,7 +1117,7 @@ impl<T, A: Allocator + Clone> BTreeSet<T, A> {
     /// Basic usage:
     ///
     /// ```
-    /// use std::collections::BTreeSet;
+    /// use core::collections::BTreeSet;
     ///
     /// let mut a = BTreeSet::new();
     /// a.insert(1);
@@ -1164,7 +1164,7 @@ impl<T, A: Allocator + Clone> BTreeSet<T, A> {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeSet;
+    /// use core::collections::BTreeSet;
     ///
     /// // Splitting a set into even and odd values, reusing the original set:
     /// let mut set: BTreeSet<i32> = (0..8).collect();
@@ -1196,7 +1196,7 @@ impl<T, A: Allocator + Clone> BTreeSet<T, A> {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeSet;
+    /// use core::collections::BTreeSet;
     ///
     /// let set = BTreeSet::from([3, 1, 2]);
     /// let mut set_iter = set.iter();
@@ -1216,7 +1216,7 @@ impl<T, A: Allocator + Clone> BTreeSet<T, A> {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeSet;
+    /// use core::collections::BTreeSet;
     ///
     /// let mut v = BTreeSet::new();
     /// assert_eq!(v.len(), 0);
@@ -1233,7 +1233,7 @@ impl<T, A: Allocator + Clone> BTreeSet<T, A> {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeSet;
+    /// use core::collections::BTreeSet;
     ///
     /// let mut v = BTreeSet::new();
     /// assert!(v.is_empty());
@@ -1262,8 +1262,8 @@ impl<T, A: Allocator + Clone> BTreeSet<T, A> {
     /// ```
     /// #![feature(btree_cursors)]
     ///
-    /// use std::collections::BTreeSet;
-    /// use std::ops::Bound;
+    /// use core::collections::BTreeSet;
+    /// use core::ops::Bound;
     ///
     /// let set = BTreeSet::from([1, 2, 3, 4]);
     ///
@@ -1306,8 +1306,8 @@ impl<T, A: Allocator + Clone> BTreeSet<T, A> {
     /// ```
     /// #![feature(btree_cursors)]
     ///
-    /// use std::collections::BTreeSet;
-    /// use std::ops::Bound;
+    /// use core::collections::BTreeSet;
+    /// use core::ops::Bound;
     ///
     /// let mut set = BTreeSet::from([1, 2, 3, 4]);
     ///
@@ -1350,8 +1350,8 @@ impl<T, A: Allocator + Clone> BTreeSet<T, A> {
     /// ```
     /// #![feature(btree_cursors)]
     ///
-    /// use std::collections::BTreeSet;
-    /// use std::ops::Bound;
+    /// use core::collections::BTreeSet;
+    /// use core::ops::Bound;
     ///
     /// let set = BTreeSet::from([1, 2, 3, 4]);
     ///
@@ -1394,8 +1394,8 @@ impl<T, A: Allocator + Clone> BTreeSet<T, A> {
     /// ```
     /// #![feature(btree_cursors)]
     ///
-    /// use std::collections::BTreeSet;
-    /// use std::ops::Bound;
+    /// use core::collections::BTreeSet;
+    /// use core::ops::Bound;
     ///
     /// let mut set = BTreeSet::from([1, 2, 3, 4]);
     ///
@@ -1452,7 +1452,7 @@ impl<T: Ord, const N: usize> From<[T; N]> for BTreeSet<T> {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeSet;
+    /// use core::collections::BTreeSet;
     ///
     /// let set1 = BTreeSet::from([1, 2, 3, 4]);
     /// let set2: BTreeSet<_> = [1, 2, 3, 4].into();
@@ -1478,7 +1478,7 @@ impl<T, A: Allocator + Clone> IntoIterator for BTreeSet<T, A> {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeSet;
+    /// use core::collections::BTreeSet;
     ///
     /// let set = BTreeSet::from([1, 2, 3, 4]);
     ///
@@ -1590,7 +1590,7 @@ impl<T: Ord + Clone, A: Allocator + Clone> Sub<&BTreeSet<T, A>> for &BTreeSet<T,
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeSet;
+    /// use core::collections::BTreeSet;
     ///
     /// let a = BTreeSet::from([1, 2, 3]);
     /// let b = BTreeSet::from([3, 4, 5]);
@@ -1614,7 +1614,7 @@ impl<T: Ord + Clone, A: Allocator + Clone> BitXor<&BTreeSet<T, A>> for &BTreeSet
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeSet;
+    /// use core::collections::BTreeSet;
     ///
     /// let a = BTreeSet::from([1, 2, 3]);
     /// let b = BTreeSet::from([2, 3, 4]);
@@ -1638,7 +1638,7 @@ impl<T: Ord + Clone, A: Allocator + Clone> BitAnd<&BTreeSet<T, A>> for &BTreeSet
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeSet;
+    /// use core::collections::BTreeSet;
     ///
     /// let a = BTreeSet::from([1, 2, 3]);
     /// let b = BTreeSet::from([2, 3, 4]);
@@ -1662,7 +1662,7 @@ impl<T: Ord + Clone, A: Allocator + Clone> BitOr<&BTreeSet<T, A>> for &BTreeSet<
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeSet;
+    /// use core::collections::BTreeSet;
     ///
     /// let a = BTreeSet::from([1, 2, 3]);
     /// let b = BTreeSet::from([3, 4, 5]);
@@ -1751,7 +1751,7 @@ impl<T> Default for Iter<'_, T> {
     /// Creates an empty `btree_set::Iter`.
     ///
     /// ```
-    /// # use std::collections::btree_set;
+    /// # use core::collections::btree_set;
     /// let iter: btree_set::Iter<'_, u8> = Default::default();
     /// assert_eq!(iter.len(), 0);
     /// ```
@@ -1782,7 +1782,7 @@ where
     /// Creates an empty `btree_set::IntoIter`.
     ///
     /// ```
-    /// # use std::collections::btree_set;
+    /// # use core::collections::btree_set;
     /// let iter: btree_set::IntoIter<u8> = Default::default();
     /// assert_eq!(iter.len(), 0);
     /// ```
@@ -1834,7 +1834,7 @@ impl<T> Default for Range<'_, T> {
     /// Creates an empty `btree_set::Range`.
     ///
     /// ```
-    /// # use std::collections::btree_set;
+    /// # use core::collections::btree_set;
     /// let iter: btree_set::Range<'_, u8> = Default::default();
     /// assert_eq!(iter.count(), 0);
     /// ```

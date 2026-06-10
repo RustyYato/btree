@@ -1,9 +1,9 @@
 //! Taken from std, https://github.com/rust-lang/rust/tree/485ec3fbcc12fa14ef6596dabb125ad710499c9e/library/alloctests/testing/crash_test.rs
 
-use std::cmp::Ordering;
-use std::fmt::Debug;
-use std::sync::atomic::AtomicUsize;
-use std::sync::atomic::Ordering::SeqCst;
+use core::cmp::Ordering;
+use core::fmt::Debug;
+use core::sync::atomic::AtomicUsize;
+use core::sync::atomic::Ordering::SeqCst;
 
 /// A blueprint for crash test dummy instances that monitor particular events.
 /// Some instances may be configured to panic at some point.

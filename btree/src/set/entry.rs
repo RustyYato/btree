@@ -5,7 +5,7 @@ use core::fmt::{self, Debug};
 use Entry::*;
 
 use super::{SetValZST, map};
-use std::alloc::{Allocator, Global};
+use alloc::alloc::{Allocator, Global};
 
 /// A view into a single entry in a set, which may either be vacant or occupied.
 ///
@@ -19,7 +19,7 @@ use std::alloc::{Allocator, Global};
 /// ```
 /// #![feature(btree_set_entry)]
 ///
-/// use std::collections::btree_set::BTreeSet;
+/// use core::collections::btree_set::BTreeSet;
 ///
 /// let mut set = BTreeSet::new();
 /// set.extend(["a", "b", "c"]);
@@ -48,7 +48,7 @@ pub enum Entry<'a, T, A: Allocator + Clone = Global> {
     /// ```
     /// #![feature(btree_set_entry)]
     ///
-    /// use std::collections::btree_set::{Entry, BTreeSet};
+    /// use core::collections::btree_set::{Entry, BTreeSet};
     ///
     /// let mut set = BTreeSet::from(["a", "b"]);
     ///
@@ -66,7 +66,7 @@ pub enum Entry<'a, T, A: Allocator + Clone = Global> {
     /// ```
     /// #![feature(btree_set_entry)]
     ///
-    /// use std::collections::btree_set::{Entry, BTreeSet};
+    /// use core::collections::btree_set::{Entry, BTreeSet};
     ///
     /// let mut set = BTreeSet::new();
     ///
@@ -94,7 +94,7 @@ impl<T: Debug + Ord, A: Allocator + Clone> Debug for Entry<'_, T, A> {
 /// ```
 /// #![feature(btree_set_entry)]
 ///
-/// use std::collections::btree_set::{Entry, BTreeSet};
+/// use core::collections::btree_set::{Entry, BTreeSet};
 ///
 /// let mut set = BTreeSet::new();
 /// set.extend(["a", "b", "c"]);
@@ -141,7 +141,7 @@ impl<T: Debug + Ord, A: Allocator + Clone> Debug for OccupiedEntry<'_, T, A> {
 /// ```
 /// #![feature(btree_set_entry)]
 ///
-/// use std::collections::btree_set::{Entry, BTreeSet};
+/// use core::collections::btree_set::{Entry, BTreeSet};
 ///
 /// let mut set = BTreeSet::<&str>::new();
 ///
@@ -176,7 +176,7 @@ impl<'a, T: Ord, A: Allocator + Clone> Entry<'a, T, A> {
     /// ```
     /// #![feature(btree_set_entry)]
     ///
-    /// use std::collections::BTreeSet;
+    /// use core::collections::BTreeSet;
     ///
     /// let mut set = BTreeSet::new();
     /// let entry = set.entry("horseyland").insert();
@@ -198,7 +198,7 @@ impl<'a, T: Ord, A: Allocator + Clone> Entry<'a, T, A> {
     /// ```
     /// #![feature(btree_set_entry)]
     ///
-    /// use std::collections::BTreeSet;
+    /// use core::collections::BTreeSet;
     ///
     /// let mut set = BTreeSet::new();
     ///
@@ -225,7 +225,7 @@ impl<'a, T: Ord, A: Allocator + Clone> Entry<'a, T, A> {
     /// ```
     /// #![feature(btree_set_entry)]
     ///
-    /// use std::collections::BTreeSet;
+    /// use core::collections::BTreeSet;
     ///
     /// let mut set = BTreeSet::new();
     /// set.entry("poneyland").or_insert();
@@ -252,7 +252,7 @@ impl<'a, T: Ord, A: Allocator + Clone> OccupiedEntry<'a, T, A> {
     /// ```
     /// #![feature(btree_set_entry)]
     ///
-    /// use std::collections::btree_set::{Entry, BTreeSet};
+    /// use core::collections::btree_set::{Entry, BTreeSet};
     ///
     /// let mut set = BTreeSet::new();
     /// set.entry("poneyland").or_insert();
@@ -274,8 +274,8 @@ impl<'a, T: Ord, A: Allocator + Clone> OccupiedEntry<'a, T, A> {
     /// ```
     /// #![feature(btree_set_entry)]
     ///
-    /// use std::collections::BTreeSet;
-    /// use std::collections::btree_set::Entry;
+    /// use core::collections::BTreeSet;
+    /// use core::collections::btree_set::Entry;
     ///
     /// let mut set = BTreeSet::new();
     /// set.entry("poneyland").or_insert();
@@ -301,7 +301,7 @@ impl<'a, T: Ord, A: Allocator + Clone> VacantEntry<'a, T, A> {
     /// ```
     /// #![feature(btree_set_entry)]
     ///
-    /// use std::collections::BTreeSet;
+    /// use core::collections::BTreeSet;
     ///
     /// let mut set = BTreeSet::new();
     /// assert_eq!(set.entry("poneyland").get(), &"poneyland");
@@ -318,7 +318,7 @@ impl<'a, T: Ord, A: Allocator + Clone> VacantEntry<'a, T, A> {
     /// ```
     /// #![feature(btree_set_entry)]
     ///
-    /// use std::collections::btree_set::{Entry, BTreeSet};
+    /// use core::collections::btree_set::{Entry, BTreeSet};
     ///
     /// let mut set = BTreeSet::new();
     ///
@@ -339,8 +339,8 @@ impl<'a, T: Ord, A: Allocator + Clone> VacantEntry<'a, T, A> {
     /// ```
     /// #![feature(btree_set_entry)]
     ///
-    /// use std::collections::BTreeSet;
-    /// use std::collections::btree_set::Entry;
+    /// use core::collections::BTreeSet;
+    /// use core::collections::btree_set::Entry;
     ///
     /// let mut set = BTreeSet::new();
     ///

@@ -7,7 +7,7 @@ use core::{hint, ptr};
 use super::node::ForceResult::*;
 use super::node::{Handle, NodeRef, marker};
 use super::search::SearchBound;
-use std::alloc::Allocator;
+use alloc::alloc::Allocator;
 // `front` and `back` are always both `None` or both `Some`.
 pub(super) struct LeafRange<BorrowType, K, V> {
     front: Option<Handle<NodeRef<BorrowType, K, V, marker::Leaf>, marker::Edge>>,

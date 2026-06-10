@@ -39,8 +39,8 @@ use core::num::NonZero;
 use core::ptr::{self, NonNull};
 use core::slice::SliceIndex;
 
-use std::alloc::{Allocator, Layout};
-use std::boxed::Box;
+use alloc::alloc::{Allocator, Layout};
+use alloc::boxed::Box;
 
 const B: usize = 6;
 pub(super) const CAPACITY: usize = 2 * B - 1;

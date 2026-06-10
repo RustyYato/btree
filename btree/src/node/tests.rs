@@ -2,9 +2,9 @@
 
 use super::super::navigate;
 use super::*;
-use std::alloc::Global;
-use std::fmt::Debug;
-use std::string::String;
+use alloc::string::String;
+use alloc::alloc::Global;
+use core::fmt::Debug;
 
 impl<'a, K: 'a, V: 'a> NodeRef<marker::Immut<'a>, K, V, marker::LeafOrInternal> {
     // Asserts that the back pointer in each reachable node points to its parent.

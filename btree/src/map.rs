@@ -19,8 +19,8 @@ use super::node::{self, Handle, NodeRef, Root, marker};
 use super::search::SearchBound;
 use super::search::SearchResult::*;
 use super::set_val::SetValZST;
-use std::alloc::{Allocator, Global};
-use std::vec::Vec;
+use alloc::alloc::{Allocator, Global};
+use alloc::vec::Vec;
 
 mod entry;
 
@@ -61,7 +61,7 @@ pub(super) const MIN_LEN: usize = node::MIN_LEN_AFTER_SPLIT;
 /// # Examples
 ///
 /// ```
-/// use std::collections::BTreeMap;
+/// use core::collections::BTreeMap;
 ///
 /// // type inference lets us omit an explicit type signature (which
 /// // would be `BTreeMap<&str, &str>` in this example).
@@ -103,7 +103,7 @@ pub(super) const MIN_LEN: usize = node::MIN_LEN_AFTER_SPLIT;
 /// A `BTreeMap` with a known list of items can be initialized from an array:
 ///
 /// ```
-/// use std::collections::BTreeMap;
+/// use core::collections::BTreeMap;
 ///
 /// let solar_distance = BTreeMap::from([
 ///     ("Mercury", 0.4),
@@ -121,7 +121,7 @@ pub(super) const MIN_LEN: usize = node::MIN_LEN_AFTER_SPLIT;
 /// [`Entry API`]: BTreeMap::entry
 ///
 /// ```
-/// use std::collections::BTreeMap;
+/// use core::collections::BTreeMap;
 ///
 /// // type inference lets us omit an explicit type signature (which
 /// // would be `BTreeMap<&str, u8>` in this example).
@@ -193,7 +193,7 @@ pub struct BTreeMap<K, V, A: Allocator + Clone = Global> {
     // is live, it's unnecessary to store the allocator in each node.
     pub(super) alloc: ManuallyDrop<A>,
     // For dropck; the `Box` avoids making the `Unpin` impl more strict than before
-    _marker: PhantomData<std::boxed::Box<(K, V), A>>,
+    _marker: PhantomData<alloc::boxed::Box<(K, V), A>>,
 }
 unsafe impl<#[may_dangle] K, #[may_dangle] V, A: Allocator + Clone> Drop for BTreeMap<K, V, A> {
     fn drop(&mut self) {
@@ -378,7 +378,7 @@ impl<'a, K: 'a, V: 'a> Default for Iter<'a, K, V> {
     /// Creates an empty `btree_map::Iter`.
     ///
     /// ```
-    /// # use std::collections::btree_map;
+    /// # use core::collections::btree_map;
     /// let iter: btree_map::Iter<'_, u8, u8> = Default::default();
     /// assert_eq!(iter.len(), 0);
     /// ```
@@ -417,7 +417,7 @@ impl<'a, K: 'a, V: 'a> Default for IterMut<'a, K, V> {
     /// Creates an empty `btree_map::IterMut`.
     ///
     /// ```
-    /// # use std::collections::btree_map;
+    /// # use core::collections::btree_map;
     /// let iter: btree_map::IterMut<'_, u8, u8> = Default::default();
     /// assert_eq!(iter.len(), 0);
     /// ```
@@ -465,7 +465,7 @@ where
     /// Creates an empty `btree_map::IntoIter`.
     ///
     /// ```
-    /// # use std::collections::btree_map;
+    /// # use core::collections::btree_map;
     /// let iter: btree_map::IntoIter<u8, u8> = Default::default();
     /// assert_eq!(iter.len(), 0);
     /// ```
@@ -610,7 +610,7 @@ impl<K, V> BTreeMap<K, V> {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeMap;
+    /// use core::collections::BTreeMap;
     ///
     /// let mut map = BTreeMap::new();
     ///
@@ -635,7 +635,7 @@ impl<K, V, A: Allocator + Clone> BTreeMap<K, V, A> {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeMap;
+    /// use core::collections::BTreeMap;
     ///
     /// let mut a = BTreeMap::new();
     /// a.insert(1, "a");
@@ -660,8 +660,8 @@ impl<K, V, A: Allocator + Clone> BTreeMap<K, V, A> {
     /// # #![feature(allocator_api)]
     /// # #![feature(btreemap_alloc)]
     ///
-    /// use std::collections::BTreeMap;
-    /// use std::alloc::Global;
+    /// use core::collections::BTreeMap;
+    /// use alloc::alloc::Global;
     ///
     /// let map: BTreeMap<i32, i32> = BTreeMap::new_in(Global);
     /// ```
@@ -685,7 +685,7 @@ impl<K, V, A: Allocator + Clone> BTreeMap<K, V, A> {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeMap;
+    /// use core::collections::BTreeMap;
     ///
     /// let mut map = BTreeMap::new();
     /// map.insert(1, "a");
@@ -716,8 +716,8 @@ impl<K, V, A: Allocator + Clone> BTreeMap<K, V, A> {
     /// # Examples
     ///
     /// ```
-    /// use std::cmp::Ordering;
-    /// use std::collections::BTreeMap;
+    /// use core::cmp::Ordering;
+    /// use core::collections::BTreeMap;
     ///
     /// #[derive(Clone, Copy, Debug)]
     /// struct S {
@@ -775,7 +775,7 @@ impl<K, V, A: Allocator + Clone> BTreeMap<K, V, A> {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeMap;
+    /// use core::collections::BTreeMap;
     ///
     /// let mut map = BTreeMap::new();
     /// assert_eq!(map.first_key_value(), None);
@@ -801,7 +801,7 @@ impl<K, V, A: Allocator + Clone> BTreeMap<K, V, A> {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeMap;
+    /// use core::collections::BTreeMap;
     ///
     /// let mut map = BTreeMap::new();
     /// map.insert(1, "a");
@@ -837,7 +837,7 @@ impl<K, V, A: Allocator + Clone> BTreeMap<K, V, A> {
     /// Draining elements in ascending order, while keeping a usable map each iteration.
     ///
     /// ```
-    /// use std::collections::BTreeMap;
+    /// use core::collections::BTreeMap;
     ///
     /// let mut map = BTreeMap::new();
     /// map.insert(1, "a");
@@ -860,7 +860,7 @@ impl<K, V, A: Allocator + Clone> BTreeMap<K, V, A> {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeMap;
+    /// use core::collections::BTreeMap;
     ///
     /// let mut map = BTreeMap::new();
     /// map.insert(1, "b");
@@ -885,7 +885,7 @@ impl<K, V, A: Allocator + Clone> BTreeMap<K, V, A> {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeMap;
+    /// use core::collections::BTreeMap;
     ///
     /// let mut map = BTreeMap::new();
     /// map.insert(1, "a");
@@ -921,7 +921,7 @@ impl<K, V, A: Allocator + Clone> BTreeMap<K, V, A> {
     /// Draining elements in descending order, while keeping a usable map each iteration.
     ///
     /// ```
-    /// use std::collections::BTreeMap;
+    /// use core::collections::BTreeMap;
     ///
     /// let mut map = BTreeMap::new();
     /// map.insert(1, "a");
@@ -946,7 +946,7 @@ impl<K, V, A: Allocator + Clone> BTreeMap<K, V, A> {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeMap;
+    /// use core::collections::BTreeMap;
     ///
     /// let mut map = BTreeMap::new();
     /// map.insert(1, "a");
@@ -969,7 +969,7 @@ impl<K, V, A: Allocator + Clone> BTreeMap<K, V, A> {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeMap;
+    /// use core::collections::BTreeMap;
     ///
     /// let mut map = BTreeMap::new();
     /// map.insert(1, "a");
@@ -1005,7 +1005,7 @@ impl<K, V, A: Allocator + Clone> BTreeMap<K, V, A> {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeMap;
+    /// use core::collections::BTreeMap;
     ///
     /// let mut map = BTreeMap::new();
     /// assert_eq!(map.insert(37, "a"), None);
@@ -1039,7 +1039,7 @@ impl<K, V, A: Allocator + Clone> BTreeMap<K, V, A> {
     /// ```
     /// #![feature(map_try_insert)]
     ///
-    /// use std::collections::BTreeMap;
+    /// use core::collections::BTreeMap;
     ///
     /// let mut map = BTreeMap::new();
     /// assert_eq!(map.try_insert(37, "a").unwrap(), &"a");
@@ -1089,7 +1089,7 @@ impl<K, V, A: Allocator + Clone> BTreeMap<K, V, A> {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeMap;
+    /// use core::collections::BTreeMap;
     ///
     /// let mut map = BTreeMap::new();
     /// map.insert(1, "a");
@@ -1113,7 +1113,7 @@ impl<K, V, A: Allocator + Clone> BTreeMap<K, V, A> {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeMap;
+    /// use core::collections::BTreeMap;
     ///
     /// let mut map = BTreeMap::new();
     /// map.insert(1, "a");
@@ -1149,7 +1149,7 @@ impl<K, V, A: Allocator + Clone> BTreeMap<K, V, A> {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeMap;
+    /// use core::collections::BTreeMap;
     ///
     /// let mut map: BTreeMap<i32, i32> = (0..8).map(|x| (x, x*10)).collect();
     /// // Keep only the elements with even-numbered keys.
@@ -1177,7 +1177,7 @@ impl<K, V, A: Allocator + Clone> BTreeMap<K, V, A> {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeMap;
+    /// use core::collections::BTreeMap;
     ///
     /// let mut a = BTreeMap::new();
     /// a.insert(1, "a");
@@ -1229,7 +1229,7 @@ impl<K, V, A: Allocator + Clone> BTreeMap<K, V, A> {
     ///
     /// ```
     /// #![feature(btree_merge)]
-    /// use std::collections::BTreeMap;
+    /// use core::collections::BTreeMap;
     ///
     /// let mut a = BTreeMap::new();
     /// a.insert(1, String::from("a"));
@@ -1379,8 +1379,8 @@ impl<K, V, A: Allocator + Clone> BTreeMap<K, V, A> {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeMap;
-    /// use std::ops::Bound::Included;
+    /// use core::collections::BTreeMap;
+    /// use core::ops::Bound::Included;
     ///
     /// let mut map = BTreeMap::new();
     /// map.insert(3, "a");
@@ -1423,7 +1423,7 @@ impl<K, V, A: Allocator + Clone> BTreeMap<K, V, A> {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeMap;
+    /// use core::collections::BTreeMap;
     ///
     /// let mut map: BTreeMap<&str, i32> =
     ///     [("Alice", 0), ("Bob", 0), ("Carol", 0), ("Cheryl", 0)].into();
@@ -1458,7 +1458,7 @@ impl<K, V, A: Allocator + Clone> BTreeMap<K, V, A> {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeMap;
+    /// use core::collections::BTreeMap;
     ///
     /// let mut count: BTreeMap<&str, usize> = BTreeMap::new();
     ///
@@ -1509,7 +1509,7 @@ impl<K, V, A: Allocator + Clone> BTreeMap<K, V, A> {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeMap;
+    /// use core::collections::BTreeMap;
     ///
     /// let mut a = BTreeMap::new();
     /// a.insert(1, "a");
@@ -1576,7 +1576,7 @@ impl<K, V, A: Allocator + Clone> BTreeMap<K, V, A> {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeMap;
+    /// use core::collections::BTreeMap;
     ///
     /// // Splitting a map into even and odd keys, reusing the original map:
     /// let mut map: BTreeMap<i32, i32> = (0..8).map(|x| (x, x)).collect();
@@ -1641,7 +1641,7 @@ impl<K, V, A: Allocator + Clone> BTreeMap<K, V, A> {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeMap;
+    /// use core::collections::BTreeMap;
     ///
     /// let mut a = BTreeMap::new();
     /// a.insert(2, "b");
@@ -1664,7 +1664,7 @@ impl<K, V, A: Allocator + Clone> BTreeMap<K, V, A> {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeMap;
+    /// use core::collections::BTreeMap;
     ///
     /// let mut a = BTreeMap::new();
     /// a.insert(1, "hello");
@@ -2013,7 +2013,7 @@ impl<K, V> Default for Keys<'_, K, V> {
     /// Creates an empty `btree_map::Keys`.
     ///
     /// ```
-    /// # use std::collections::btree_map;
+    /// # use core::collections::btree_map;
     /// let iter: btree_map::Keys<'_, u8, u8> = Default::default();
     /// assert_eq!(iter.len(), 0);
     /// ```
@@ -2065,7 +2065,7 @@ impl<K, V> Default for Values<'_, K, V> {
     /// Creates an empty `btree_map::Values`.
     ///
     /// ```
-    /// # use std::collections::btree_map;
+    /// # use core::collections::btree_map;
     /// let iter: btree_map::Values<'_, u8, u8> = Default::default();
     /// assert_eq!(iter.len(), 0);
     /// ```
@@ -2224,7 +2224,7 @@ impl<K, V> Default for Range<'_, K, V> {
     /// Creates an empty `btree_map::Range`.
     ///
     /// ```
-    /// # use std::collections::btree_map;
+    /// # use core::collections::btree_map;
     /// let iter: btree_map::Range<'_, u8, u8> = Default::default();
     /// assert_eq!(iter.count(), 0);
     /// ```
@@ -2238,7 +2238,7 @@ impl<K, V> Default for RangeMut<'_, K, V> {
     /// Creates an empty `btree_map::RangeMut`.
     ///
     /// ```
-    /// # use std::collections::btree_map;
+    /// # use core::collections::btree_map;
     /// let iter: btree_map::RangeMut<'_, u8, u8> = Default::default();
     /// assert_eq!(iter.count(), 0);
     /// ```
@@ -2280,7 +2280,7 @@ impl<K, V> Default for ValuesMut<'_, K, V> {
     /// Creates an empty `btree_map::ValuesMut`.
     ///
     /// ```
-    /// # use std::collections::btree_map;
+    /// # use core::collections::btree_map;
     /// let iter: btree_map::ValuesMut<'_, u8, u8> = Default::default();
     /// assert_eq!(iter.count(), 0);
     /// ```
@@ -2338,7 +2338,7 @@ where
     /// Creates an empty `btree_map::IntoKeys`.
     ///
     /// ```
-    /// # use std::collections::btree_map;
+    /// # use core::collections::btree_map;
     /// let iter: btree_map::IntoKeys<u8, u8> = Default::default();
     /// assert_eq!(iter.len(), 0);
     /// ```
@@ -2382,7 +2382,7 @@ where
     /// Creates an empty `btree_map::IntoValues`.
     ///
     /// ```
-    /// # use std::collections::btree_map;
+    /// # use core::collections::btree_map;
     /// let iter: btree_map::IntoValues<u8, u8> = Default::default();
     /// assert_eq!(iter.len(), 0);
     /// ```
@@ -2549,7 +2549,7 @@ impl<K: Ord, V, const N: usize> From<[(K, V); N]> for BTreeMap<K, V> {
     /// all but one of the corresponding values will be dropped.
     ///
     /// ```
-    /// use std::collections::BTreeMap;
+    /// use core::collections::BTreeMap;
     ///
     /// let map1 = BTreeMap::from([(1, 2), (3, 4)]);
     /// let map2: BTreeMap<_, _> = [(1, 2), (3, 4)].into();
@@ -2572,7 +2572,7 @@ impl<K, V, A: Allocator + Clone> BTreeMap<K, V, A> {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeMap;
+    /// use core::collections::BTreeMap;
     ///
     /// let mut map = BTreeMap::new();
     /// map.insert(3, "c");
@@ -2607,7 +2607,7 @@ impl<K, V, A: Allocator + Clone> BTreeMap<K, V, A> {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeMap;
+    /// use core::collections::BTreeMap;
     ///
     /// let mut map = BTreeMap::from([
     ///    ("a", 1),
@@ -2645,7 +2645,7 @@ impl<K, V, A: Allocator + Clone> BTreeMap<K, V, A> {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeMap;
+    /// use core::collections::BTreeMap;
     ///
     /// let mut a = BTreeMap::new();
     /// a.insert(2, "b");
@@ -2663,7 +2663,7 @@ impl<K, V, A: Allocator + Clone> BTreeMap<K, V, A> {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeMap;
+    /// use core::collections::BTreeMap;
     ///
     /// let mut a = BTreeMap::new();
     /// a.insert(1, "hello");
@@ -2681,7 +2681,7 @@ impl<K, V, A: Allocator + Clone> BTreeMap<K, V, A> {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeMap;
+    /// use core::collections::BTreeMap;
     ///
     /// let mut a = BTreeMap::new();
     /// a.insert(1, String::from("hello"));
@@ -2706,7 +2706,7 @@ impl<K, V, A: Allocator + Clone> BTreeMap<K, V, A> {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeMap;
+    /// use core::collections::BTreeMap;
     ///
     /// let mut a = BTreeMap::new();
     /// assert_eq!(a.len(), 0);
@@ -2723,7 +2723,7 @@ impl<K, V, A: Allocator + Clone> BTreeMap<K, V, A> {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeMap;
+    /// use core::collections::BTreeMap;
     ///
     /// let mut a = BTreeMap::new();
     /// assert!(a.is_empty());
@@ -2752,8 +2752,8 @@ impl<K, V, A: Allocator + Clone> BTreeMap<K, V, A> {
     /// ```
     /// #![feature(btree_cursors)]
     ///
-    /// use std::collections::BTreeMap;
-    /// use std::ops::Bound;
+    /// use core::collections::BTreeMap;
+    /// use core::ops::Bound;
     ///
     /// let map = BTreeMap::from([
     ///     (1, "a"),
@@ -2812,8 +2812,8 @@ impl<K, V, A: Allocator + Clone> BTreeMap<K, V, A> {
     /// ```
     /// #![feature(btree_cursors)]
     ///
-    /// use std::collections::BTreeMap;
-    /// use std::ops::Bound;
+    /// use core::collections::BTreeMap;
+    /// use core::ops::Bound;
     ///
     /// let mut map = BTreeMap::from([
     ///     (1, "a"),
@@ -2881,8 +2881,8 @@ impl<K, V, A: Allocator + Clone> BTreeMap<K, V, A> {
     /// ```
     /// #![feature(btree_cursors)]
     ///
-    /// use std::collections::BTreeMap;
-    /// use std::ops::Bound;
+    /// use core::collections::BTreeMap;
+    /// use core::ops::Bound;
     ///
     /// let map = BTreeMap::from([
     ///     (1, "a"),
@@ -2941,8 +2941,8 @@ impl<K, V, A: Allocator + Clone> BTreeMap<K, V, A> {
     /// ```
     /// #![feature(btree_cursors)]
     ///
-    /// use std::collections::BTreeMap;
-    /// use std::ops::Bound;
+    /// use core::collections::BTreeMap;
+    /// use core::ops::Bound;
     ///
     /// let mut map = BTreeMap::from([
     ///     (1, "a"),

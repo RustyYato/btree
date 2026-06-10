@@ -3,20 +3,20 @@
 #![allow(clippy::redundant_closure, clippy::single_char_add_str)]
 
 use core::assert_matches;
-use std::ops::Bound::{Excluded, Included, Unbounded};
+use core::ops::Bound::{Excluded, Included, Unbounded};
+use core::sync::atomic::AtomicUsize;
+use core::sync::atomic::Ordering::SeqCst;
+use core::{cmp, iter};
 use std::panic::{AssertUnwindSafe, catch_unwind};
-use std::sync::atomic::AtomicUsize;
-use std::sync::atomic::Ordering::SeqCst;
-use std::{cmp, iter};
 
 use super::*;
 use crate::testing::crash_test::{CrashTestDummy, Panic};
 use crate::testing::ord_chaos::{Cyclic3, Governed, Governor, IdBased};
 use crate::testing::rng::DeterministicRng;
-use std::boxed::Box;
-use std::fmt::Debug;
-use std::rc::Rc;
-use std::string::{String, ToString};
+use alloc::boxed::Box;
+use alloc::rc::Rc;
+use alloc::string::{String, ToString};
+use core::fmt::Debug;
 
 // Minimum number of elements to insert, to guarantee a tree with 2 levels,
 // i.e., a tree who's root is an internal node at height 1, with edges to leaf nodes.
