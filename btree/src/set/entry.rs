@@ -1,3 +1,5 @@
+//! Taken from std, https://github.com/rust-lang/rust/tree/beae781308e9ddef13074a03faf57ca2fac59a5b/library/alloc/src/collections/btree/src/set/entry.rs
+
 use core::fmt::{self, Debug};
 
 use Entry::*;
@@ -38,10 +40,7 @@ use std::alloc::{Allocator, Global};
 /// println!("Our BTreeSet: {:?}", set);
 /// assert!(set.iter().eq(&["a", "b", "c", "d", "e"]));
 /// ```
-pub enum Entry<
-    'a,
-    T, A: Allocator + Clone = Global,
-> {
+pub enum Entry<'a, T, A: Allocator + Clone = Global> {
     /// An occupied entry.
     ///
     /// # Examples
@@ -123,15 +122,14 @@ impl<T: Debug + Ord, A: Allocator + Clone> Debug for Entry<'_, T, A> {
 /// assert_eq!(set.get(&"c"), None);
 /// assert_eq!(set.len(), 2);
 /// ```
-pub struct OccupiedEntry<
-    'a,
-    T, A: Allocator + Clone = Global,
-> {
+pub struct OccupiedEntry<'a, T, A: Allocator + Clone = Global> {
     pub(super) inner: map::OccupiedEntry<'a, T, SetValZST, A>,
 }
 impl<T: Debug + Ord, A: Allocator + Clone> Debug for OccupiedEntry<'_, T, A> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        f.debug_struct("OccupiedEntry").field("value", self.get()).finish()
+        f.debug_struct("OccupiedEntry")
+            .field("value", self.get())
+            .finish()
     }
 }
 
@@ -161,10 +159,7 @@ impl<T: Debug + Ord, A: Allocator + Clone> Debug for OccupiedEntry<'_, T, A> {
 /// }
 /// assert!(set.contains("b") && set.len() == 2);
 /// ```
-pub struct VacantEntry<
-    'a,
-    T, A: Allocator + Clone = Global,
-> {
+pub struct VacantEntry<'a, T, A: Allocator + Clone = Global> {
     pub(super) inner: map::VacantEntry<'a, T, SetValZST, A>,
 }
 impl<T: Debug + Ord, A: Allocator + Clone> Debug for VacantEntry<'_, T, A> {
@@ -361,6 +356,8 @@ impl<'a, T: Ord, A: Allocator + Clone> VacantEntry<'a, T, A> {
 
     #[inline]
     fn insert_entry(self) -> OccupiedEntry<'a, T, A> {
-        OccupiedEntry { inner: self.inner.insert_entry(SetValZST) }
+        OccupiedEntry {
+            inner: self.inner.insert_entry(SetValZST),
+        }
     }
 }

@@ -1,3 +1,5 @@
+//! Taken from std, https://github.com/rust-lang/rust/tree/beae781308e9ddef13074a03faf57ca2fac59a5b/library/alloc/src/collections/btree/src/fix.rs
+
 use core::alloc::Allocator;
 
 use super::map::MIN_LEN;
@@ -85,7 +87,9 @@ impl<K, V> Root<K, V> {
     pub(super) fn fix_right_border<A: Allocator + Clone>(&mut self, alloc: A) {
         self.fix_top(alloc.clone());
         if self.len() > 0 {
-            self.borrow_mut().last_kv().fix_right_border_of_right_edge(alloc.clone());
+            self.borrow_mut()
+                .last_kv()
+                .fix_right_border_of_right_edge(alloc.clone());
             self.fix_top(alloc);
         }
     }
@@ -94,7 +98,9 @@ impl<K, V> Root<K, V> {
     pub(super) fn fix_left_border<A: Allocator + Clone>(&mut self, alloc: A) {
         self.fix_top(alloc.clone());
         if self.len() > 0 {
-            self.borrow_mut().first_kv().fix_left_border_of_left_edge(alloc.clone());
+            self.borrow_mut()
+                .first_kv()
+                .fix_left_border_of_left_edge(alloc.clone());
             self.fix_top(alloc);
         }
     }

@@ -1,3 +1,5 @@
+//! Taken from std, https://github.com/rust-lang/rust/tree/beae781308e9ddef13074a03faf57ca2fac59a5b/library/alloc/src/collections/btree/src/dedup_sorted_iter.rs
+
 use core::iter::Peekable;
 
 /// An iterator for deduping the key of a sorted iterator.
@@ -18,7 +20,9 @@ where
     I: Iterator<Item = (K, V)>,
 {
     pub(super) fn new(iter: I) -> Self {
-        Self { iter: iter.peekable() }
+        Self {
+            iter: iter.peekable(),
+        }
     }
 }
 

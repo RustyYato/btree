@@ -1,3 +1,5 @@
+//! Taken from std, https://github.com/rust-lang/rust/tree/beae781308e9ddef13074a03faf57ca2fac59a5b/library/alloc/src/collections/btree/set_val.rs
+
 /// Zero-Sized Type (ZST) for internal `BTreeSet` values.
 /// Used instead of `()` to differentiate between:
 /// * `BTreeMap<T, ()>` (possible user-defined map)

@@ -1,3 +1,5 @@
+//! Taken from std, https://github.com/rust-lang/rust/tree/485ec3fbcc12fa14ef6596dabb125ad710499c9e/library/alloctests/testing/ord_chaos.rs
+
 use std::cell::Cell;
 use std::cmp::Ordering::{self, *};
 use std::ptr;

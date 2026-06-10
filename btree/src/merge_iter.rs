@@ -1,3 +1,5 @@
+//! Taken from std, https://github.com/rust-lang/rust/tree/beae781308e9ddef13074a03faf57ca2fac59a5b/library/alloc/src/collections/btree/merge_iter.rs
+
 use core::cmp::Ordering;
 use core::fmt::{self, Debug};
 use core::iter::FusedIterator;
@@ -24,7 +26,11 @@ where
     I::Item: Clone,
 {
     fn clone(&self) -> Self {
-        Self { a: self.a.clone(), b: self.b.clone(), peeked: self.peeked.clone() }
+        Self {
+            a: self.a.clone(),
+            b: self.b.clone(),
+            peeked: self.peeked.clone(),
+        }
     }
 }
 
@@ -34,7 +40,11 @@ where
     I::Item: Debug,
 {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        f.debug_tuple("MergeIterInner").field(&self.a).field(&self.b).field(&self.peeked).finish()
+        f.debug_tuple("MergeIterInner")
+            .field(&self.a)
+            .field(&self.b)
+            .field(&self.peeked)
+            .finish()
     }
 }
 

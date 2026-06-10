@@ -1,3 +1,5 @@
+//! Taken from std, https://github.com/rust-lang/rust/tree/beae781308e9ddef13074a03faf57ca2fac59a5b/library/alloc/src/collections/btree/src/borrow.rs
+
 use core::marker::PhantomData;
 use core::ptr::NonNull;
 
@@ -28,7 +30,13 @@ impl<'a, T> DormantMutRef<'a, T> {
         // SAFETY: we hold the borrow throughout 'a via `_marker`, and we expose
         // only this reference, so it is unique.
         let new_ref = unsafe { &mut *ptr.as_ptr() };
-        (new_ref, Self { ptr, _marker: PhantomData })
+        (
+            new_ref,
+            Self {
+                ptr,
+                _marker: PhantomData,
+            },
+        )
     }
 
     /// Revert to the unique borrow initially captured.

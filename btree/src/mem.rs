@@ -1,3 +1,5 @@
+//! Taken from std, https://github.com/rust-lang/rust/tree/beae781308e9ddef13074a03faf57ca2fac59a5b/library/alloc/src/collections/btree/mem.rs
+
 use core::{intrinsics, mem, ptr};
 
 /// This replaces the value behind the `v` unique reference by calling the
