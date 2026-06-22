@@ -1,26 +1,24 @@
 //! Taken from std, <https://github.com/rust-lang/rust/tree/beae781308e9ddef13074a03faf57ca2fac59a5b/library/alloc/src/collections/btree/map.rs>
 
-use core::borrow::Borrow;
 use core::cmp::Ordering;
-use core::error::Error;
 use core::fmt::{self, Debug};
 use core::hash::{Hash, Hasher};
 use core::iter::{FusedIterator, TrustedLen};
 use core::marker::PhantomData;
 use core::mem::{self, ManuallyDrop};
-use core::ops::{Bound, Index, RangeBounds};
+use core::ops::{Bound, RangeBounds};
 use core::ptr;
 
 use super::borrow::DormantMutRef;
-use super::dedup_sorted_iter::DedupSortedIter;
+// use super::dedup_sorted_iter::DedupSortedIter;
 use super::navigate::{LazyLeafRange, LeafRange};
 use super::node::ForceResult::*;
-use super::node::{self, Handle, NodeRef, Root, marker};
-use super::search::SearchBound;
+use super::node::{Handle, NodeRef, Root, marker};
+// use super::search::SearchBound;
 use super::search::SearchResult::*;
-use super::set_val::SetValZST;
+// use super::set_val::SetValZST;
 use alloc::alloc::{Allocator, Global};
-use alloc::vec::Vec;
+// use alloc::vec::Vec;
 
 mod entry;
 
@@ -29,7 +27,7 @@ pub use entry::{Entry, OccupiedEntry, OccupiedError, VacantEntry};
 
 /// Minimum number of elements in a node that is not a root.
 /// We might temporarily have fewer elements during methods.
-pub(super) const MIN_LEN: usize = node::MIN_LEN_AFTER_SPLIT;
+// pub(super) const MIN_LEN: usize = node::MIN_LEN_AFTER_SPLIT;
 
 // A tree in a `BTreeMap` is a tree in the `node` module with additional invariants:
 // - Keys must appear in ascending order (according to the key's type).
@@ -71,7 +69,7 @@ pub(super) const MIN_LEN: usize = node::MIN_LEN_AFTER_SPLIT;
 /// movie_reviews.insert("Office Space",       "Deals with real issues in the workplace.");
 /// movie_reviews.insert("Pulp Fiction",       "Masterpiece.");
 /// movie_reviews.insert("The Godfather",      "Very enjoyable.");
-/// movie_reviews.insert("The Blues Brothers", "Eye lyked it a lot.");
+/// movie_reviews.insert("The Blues Brothers", "Eye liked it a lot.");
 ///
 /// // check for a specific one.
 /// if !movie_reviews.contains_key("Les Misérables") {
@@ -138,7 +136,7 @@ pub(super) const MIN_LEN: usize = node::MIN_LEN_AFTER_SPLIT;
 ///
 /// // insert a key using a function that provides a new value only if it
 /// // doesn't already exist
-/// player_stats.entry("defence").or_insert_with(random_stat_buff);
+/// player_stats.entry("defense").or_insert_with(random_stat_buff);
 ///
 /// // update a key, guarding against the key possibly not being set
 /// let stat = player_stats.entry("attack").or_insert(100);
@@ -269,7 +267,7 @@ impl<K: Clone, V: Clone, A: Allocator + Clone> Clone for BTree<K, V, A> {
 
                             // We can't destructure subtree directly
                             // because BTreeMap implements Drop
-                            let (subroot, sublength) = unsafe {
+                            let (sub_root, sub_length) = unsafe {
                                 let subtree = ManuallyDrop::new(subtree);
                                 let root = ptr::read(&subtree.root);
                                 let length = subtree.length;
@@ -279,9 +277,9 @@ impl<K: Clone, V: Clone, A: Allocator + Clone> Clone for BTree<K, V, A> {
                             out_node.push(
                                 k,
                                 v,
-                                subroot.unwrap_or_else(|| Root::new(alloc.clone())),
+                                sub_root.unwrap_or_else(|| Root::new(alloc.clone())),
                             );
-                            out_tree.length += 1 + sublength;
+                            out_tree.length += 1 + sub_length;
                         }
                     }
 
@@ -1291,7 +1289,7 @@ impl<K, V, A: Allocator + Clone> BTree<K, V, A> {
     //                 // if `f` unwinds, the next entry is already removed leaving
     //                 // the tree in valid state.
     //                 // FIXME: Once `MaybeDangling` is implemented, we can optimize
-    //                 // this through using a drop handler and transmutating CursorMutKey<K, V>
+    //                 // this through using a drop handler and transmuting CursorMutKey<K, V>
     //                 // to CursorMutKey<ManuallyDrop<K>, ManuallyDrop<V>> (see PR #152418)
     //                 if let Some((k, v)) = self_cursor.remove_next() {
     //                     // SAFETY: we remove the K, V out of the next entry,
@@ -1327,7 +1325,7 @@ impl<K, V, A: Allocator + Clone> BTree<K, V, A> {
     //                         // if `f` unwinds, the next entry is already removed leaving
     //                         // the tree in valid state.
     //                         // FIXME: Once `MaybeDangling` is implemented, we can optimize
-    //                         // this through using a drop handler and transmutating CursorMutKey<K, V>
+    //                         // this through using a drop handler and transmuting CursorMutKey<K, V>
     //                         // to CursorMutKey<ManuallyDrop<K>, ManuallyDrop<V>> (see PR #152418)
     //                         if let Some((k, v)) = self_cursor.remove_next() {
     //                             // SAFETY: we remove the K, V out of the next entry,

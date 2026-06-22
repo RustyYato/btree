@@ -840,7 +840,7 @@ fn test_range_backwards_4() {
 fn test_range_finding_ill_order_in_map() {
     let mut map = BTreeMap::new();
     map.insert(Cyclic3::B, ());
-    // Lacking static_assert, call `range` conditionally, to emphasise that
+    // Lacking static_assert, call `range` conditionally, to emphasize that
     // we cause a different panic than `test_range_backwards_1` does.
     // A more refined `should_panic` would be welcome.
     if Cyclic3::C < Cyclic3::A {

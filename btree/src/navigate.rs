@@ -561,7 +561,7 @@ impl<'a, K, V> Handle<NodeRef<marker::Immut<'a>, K, V, marker::Leaf>, marker::Ed
     /// key and value in between.
     ///
     /// # Safety
-    /// There must be another KV in the direction travelled.
+    /// There must be another KV in the direction traveled.
     unsafe fn next_unchecked(&mut self) -> (&'a K, &'a V) {
         super::mem::replace(self, |leaf_edge| {
             let kv = leaf_edge.next_kv().ok().unwrap();
@@ -573,7 +573,7 @@ impl<'a, K, V> Handle<NodeRef<marker::Immut<'a>, K, V, marker::Leaf>, marker::Ed
     /// key and value in between.
     ///
     /// # Safety
-    /// There must be another KV in the direction travelled.
+    /// There must be another KV in the direction traveled.
     unsafe fn next_back_unchecked(&mut self) -> (&'a K, &'a V) {
         super::mem::replace(self, |leaf_edge| {
             let kv = leaf_edge.next_back_kv().ok().unwrap();
@@ -587,7 +587,7 @@ impl<'a, K, V> Handle<NodeRef<marker::ValMut<'a>, K, V, marker::Leaf>, marker::E
     /// key and value in between.
     ///
     /// # Safety
-    /// There must be another KV in the direction travelled.
+    /// There must be another KV in the direction traveled.
     unsafe fn next_unchecked(&mut self) -> (&'a K, &'a mut V) {
         let kv = super::mem::replace(self, |leaf_edge| {
             let kv = leaf_edge.next_kv().ok().unwrap();
@@ -601,7 +601,7 @@ impl<'a, K, V> Handle<NodeRef<marker::ValMut<'a>, K, V, marker::Leaf>, marker::E
     /// key and value in between.
     ///
     /// # Safety
-    /// There must be another KV in the direction travelled.
+    /// There must be another KV in the direction traveled.
     unsafe fn next_back_unchecked(&mut self) -> (&'a K, &'a mut V) {
         let kv = super::mem::replace(self, |leaf_edge| {
             let kv = leaf_edge.next_back_kv().ok().unwrap();
@@ -618,7 +618,7 @@ impl<K, V> Handle<NodeRef<marker::Dying, K, V, marker::Leaf>, marker::Edge> {
     /// edge in its parent node dangling.
     ///
     /// # Safety
-    /// - There must be another KV in the direction travelled.
+    /// - There must be another KV in the direction traveled.
     /// - That KV was not previously returned by counterpart
     ///   `deallocating_next_back_unchecked` on any copy of the handles
     ///   being used to traverse the tree.
@@ -639,7 +639,7 @@ impl<K, V> Handle<NodeRef<marker::Dying, K, V, marker::Leaf>, marker::Edge> {
     /// edge in its parent node dangling.
     ///
     /// # Safety
-    /// - There must be another KV in the direction travelled.
+    /// - There must be another KV in the direction traveled.
     /// - That leaf edge was not previously returned by counterpart
     ///   `deallocating_next_unchecked` on any copy of the handles
     ///   being used to traverse the tree.

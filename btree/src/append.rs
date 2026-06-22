@@ -7,7 +7,7 @@ use super::node::{self, Root};
 impl<K, V> Root<K, V> {
     /// Pushes all key-value pairs to the end of the tree, incrementing a
     /// `length` variable along the way. The latter makes it easier for the
-    /// caller to avoid a leak when the iterator panicks.
+    /// caller to avoid a leak when the iterator panics.
     pub(super) fn bulk_push<I, A: Allocator + Clone>(
         &mut self,
         iter: I,
@@ -60,7 +60,7 @@ impl<K, V> Root<K, V> {
             }
 
             // Increment length every iteration, to make sure the map drops
-            // the appended elements even if advancing the iterator panicks.
+            // the appended elements even if advancing the iterator panics.
             *length += 1;
         }
         self.fix_right_border_of_plentiful();

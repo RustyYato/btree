@@ -2,8 +2,8 @@
 
 use super::super::navigate;
 use super::*;
-use alloc::string::String;
 use alloc::alloc::Global;
+use alloc::string::String;
 use core::fmt::Debug;
 
 impl<'a, K: 'a, V: 'a> NodeRef<marker::Immut<'a>, K, V, marker::LeafOrInternal> {

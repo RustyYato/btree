@@ -71,7 +71,7 @@ pub(super) const MIN_LEN: usize = node::MIN_LEN_AFTER_SPLIT;
 /// movie_reviews.insert("Office Space",       "Deals with real issues in the workplace.");
 /// movie_reviews.insert("Pulp Fiction",       "Masterpiece.");
 /// movie_reviews.insert("The Godfather",      "Very enjoyable.");
-/// movie_reviews.insert("The Blues Brothers", "Eye lyked it a lot.");
+/// movie_reviews.insert("The Blues Brothers", "Eye liked it a lot.");
 ///
 /// // check for a specific one.
 /// if !movie_reviews.contains_key("Les Misérables") {
@@ -138,7 +138,7 @@ pub(super) const MIN_LEN: usize = node::MIN_LEN_AFTER_SPLIT;
 ///
 /// // insert a key using a function that provides a new value only if it
 /// // doesn't already exist
-/// player_stats.entry("defence").or_insert_with(random_stat_buff);
+/// player_stats.entry("defense").or_insert_with(random_stat_buff);
 ///
 /// // update a key, guarding against the key possibly not being set
 /// let stat = player_stats.entry("attack").or_insert(100);
@@ -269,7 +269,7 @@ impl<K: Clone, V: Clone, A: Allocator + Clone> Clone for BTreeMap<K, V, A> {
 
                             // We can't destructure subtree directly
                             // because BTreeMap implements Drop
-                            let (subroot, sublength) = unsafe {
+                            let (sub_root, sub_length) = unsafe {
                                 let subtree = ManuallyDrop::new(subtree);
                                 let root = ptr::read(&subtree.root);
                                 let length = subtree.length;
@@ -279,9 +279,9 @@ impl<K: Clone, V: Clone, A: Allocator + Clone> Clone for BTreeMap<K, V, A> {
                             out_node.push(
                                 k,
                                 v,
-                                subroot.unwrap_or_else(|| Root::new(alloc.clone())),
+                                sub_root.unwrap_or_else(|| Root::new(alloc.clone())),
                             );
-                            out_tree.length += 1 + sublength;
+                            out_tree.length += 1 + sub_length;
                         }
                     }
 
@@ -1283,7 +1283,7 @@ impl<K, V, A: Allocator + Clone> BTreeMap<K, V, A> {
                     // if `f` unwinds, the next entry is already removed leaving
                     // the tree in valid state.
                     // FIXME: Once `MaybeDangling` is implemented, we can optimize
-                    // this through using a drop handler and transmutating CursorMutKey<K, V>
+                    // this through using a drop handler and transmuting CursorMutKey<K, V>
                     // to CursorMutKey<ManuallyDrop<K>, ManuallyDrop<V>> (see PR #152418)
                     if let Some((k, v)) = self_cursor.remove_next() {
                         // SAFETY: we remove the K, V out of the next entry,
@@ -1319,7 +1319,7 @@ impl<K, V, A: Allocator + Clone> BTreeMap<K, V, A> {
                             // if `f` unwinds, the next entry is already removed leaving
                             // the tree in valid state.
                             // FIXME: Once `MaybeDangling` is implemented, we can optimize
-                            // this through using a drop handler and transmutating CursorMutKey<K, V>
+                            // this through using a drop handler and transmuting CursorMutKey<K, V>
                             // to CursorMutKey<ManuallyDrop<K>, ManuallyDrop<V>> (see PR #152418)
                             if let Some((k, v)) = self_cursor.remove_next() {
                                 // SAFETY: we remove the K, V out of the next entry,
